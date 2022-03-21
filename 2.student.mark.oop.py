@@ -4,12 +4,16 @@ class student:
         self.name = _name
         self.dob = _dob
 
+    def getStudentName(self):
+        return self.name
+
+    def getNameAndId(self):
+        print("\t", (self.id).ljust(5, " "), (self.name).ljust(15, " "),  end="")
+
+    @property
     def printStudentsList(self):
-        print(
-            (self.id).ljust(5, " "),
-            (self.name).ljust(15, " "),
-            self.dob,
-        )
+        print((self.id).ljust(5, " "), (self.name).ljust(15, " "), self.dob)
+
 
 class course:
     def __init__(self, _id, _name, _studentList, _markList):
@@ -18,12 +22,15 @@ class course:
         self.studentList = _studentList
         self.markList = _markList
 
+    @property
     def printCoursesList(self):
         print((self.id).ljust(5, " "), self.name)
 
-class mark:
-    def __init__(self, _mark):
-        self.mark = _mark
+    def getCourseName(self):
+        return self.name
+
+    def printMarksList(self, i):
+        print(self.markList[i])
 
 students = []
 courses = []
@@ -38,7 +45,7 @@ for i in range(0, numOfStudents):
     id = input("Id: ")
     name = input("Name: ")
     dob = input("Dob (format: dd/mm/yy): ")
-    students.append(student(id, name, dob).__dict__)
+    students.append(student(id, name, dob))
 
     i += 1
 
@@ -53,13 +60,17 @@ for j in range(0, numOfCourses):
     studentsList = students
 
     for i in range(0, numOfStudents):
-        print(f"Mark for student {students[i]['name']}: ")
+        print(f"Mark for student {students[i].getStudentName()}: ")
         _mark = int(input())
-        marks.append(mark(_mark).__dict__)
+        marks.append(_mark)
 
         i += 1
 
-    courses.append(course(id, name, studentsList, marks[j * numOfStudents : (j+1) * numOfStudents]).__dict__)
+    courses.append(
+        course(
+            id, name, studentsList, marks[j * numOfStudents : (j + 1) * numOfStudents]
+        )
+    )
 
     j += 1
 
@@ -77,28 +88,21 @@ while choices < 4:
     if choices == 1:
         print("Id".ljust(5, " "), "Name")
         for j in range(0, numOfCourses):
-            courses[0].printCoursesList()
+            courses[j].printCoursesList
 
-    # # List students
-    # elif choices == 2:
-    #     print("Id".ljust(5, " "), "Name".ljust(15, " "), "Dob")
-    #     for i in range(0, numOfStudents):
-    #         print(
-    #             str(students[i]["id"]).ljust(5, " "),
-    #             students[i]["name"].ljust(15, " "),
-    #             students[i]["Dob"],
-    #         )
-    # # Show student marks for a given course
-    # elif choices == 3:
-    #     for j in range(0, numOfCourses):
-    #         print(courses[j]["name"])
-    #         print("\tId".ljust(5, " "), "Name".ljust(15, " "), "Mark")
-    #         for i in range(0, numOfStudents):
-    #             print(
-    #                 "\t",
-    #                 str(students[i]["id"]).ljust(5, " "),
-    #                 students[i]["name"].ljust(15, " "),
-    #                 courses[j]["marks"][i][students[i]["name"]],
-    #             )
-    # else:
-    #     break
+    # List students
+    elif choices == 2:
+        print("Id".ljust(5, " "), "Name".ljust(15, " "), "Dob")
+        for i in range(0, numOfStudents):
+            students[i].printStudentsList
+
+    # Show student marks for a given course
+    elif choices == 3:
+        for j in range(0, numOfCourses):
+            print(courses[j].getCourseName())
+            for i in range(0, numOfStudents):
+                students[i].getNameAndId()
+                courses[j].printMarksList(i)
+
+    else:
+        break
