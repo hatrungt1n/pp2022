@@ -3,16 +3,25 @@ class student:
         self.id = _id
         self.name = _name
         self.dob = _dob
-        # self.students.append(_id, _name, _dob)
+
+    def printStudentsList(self):
+        print(
+            (self.id).ljust(5, " "),
+            (self.name).ljust(15, " "),
+            self.dob,
+        )
 
 class course:
-    def __init__(self, _id, _name, _studentList, _marksList):
+    def __init__(self, _id, _name, _studentList, _markList):
         self.id = _id
         self.name = _name
         self.studentList = _studentList
-        self.marksList = _marksList
+        self.markList = _markList
 
-class mark():
+    def printCoursesList(self):
+        print((self.id).ljust(5, " "), self.name)
+
+class mark:
     def __init__(self, _mark):
         self.mark = _mark
 
@@ -42,21 +51,6 @@ for j in range(0, numOfCourses):
     id = input("Id: ")
     name = input("Name: ")
     studentsList = students
-    courses.append(course(id, name, studentsList).__dict__)
-
-    j += 1
-print(courses)
-# Select a course, input marks for student in this course
-courseSelection = 1
-while courseSelection in range(1, numOfCourses + 1):
-    courseSelection = int(
-        input(
-            f"To enter marks for student, select a course (from 1 to {numOfCourses}, type 0 to quit): "
-        )
-    )
-
-    if courseSelection == 0:
-        break
 
     for i in range(0, numOfStudents):
         print(f"Mark for student {students[i]['name']}: ")
@@ -64,8 +58,47 @@ while courseSelection in range(1, numOfCourses + 1):
         marks.append(mark(_mark).__dict__)
 
         i += 1
-    courses.append(course(marks).__dict__)
 
-print(courses)
-# print(students)
-# print(marks)
+    courses.append(course(id, name, studentsList, marks[j * numOfStudents : (j+1) * numOfStudents]).__dict__)
+
+    j += 1
+
+choices = 1
+
+# Listing functions
+while choices < 4:
+    choices = int(
+        input(
+            "If you want to see courses list, please type 1, students list, type 2, student marks, type 3, another number to quit: "
+        )
+    )
+
+    # List courses
+    if choices == 1:
+        print("Id".ljust(5, " "), "Name")
+        for j in range(0, numOfCourses):
+            courses[0].printCoursesList()
+
+    # # List students
+    # elif choices == 2:
+    #     print("Id".ljust(5, " "), "Name".ljust(15, " "), "Dob")
+    #     for i in range(0, numOfStudents):
+    #         print(
+    #             str(students[i]["id"]).ljust(5, " "),
+    #             students[i]["name"].ljust(15, " "),
+    #             students[i]["Dob"],
+    #         )
+    # # Show student marks for a given course
+    # elif choices == 3:
+    #     for j in range(0, numOfCourses):
+    #         print(courses[j]["name"])
+    #         print("\tId".ljust(5, " "), "Name".ljust(15, " "), "Mark")
+    #         for i in range(0, numOfStudents):
+    #             print(
+    #                 "\t",
+    #                 str(students[i]["id"]).ljust(5, " "),
+    #                 students[i]["name"].ljust(15, " "),
+    #                 courses[j]["marks"][i][students[i]["name"]],
+    #             )
+    # else:
+    #     break
