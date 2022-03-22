@@ -11,11 +11,11 @@ class student:
         print("\t", (self.id).ljust(5, " "), (self.name).ljust(15, " "),  end="")
 
     @property
-    def printStudentsList(self):
+    def printList(self):
         print((self.id).ljust(5, " "), (self.name).ljust(15, " "), self.dob)
 
 
-class course:
+class course(student):
     def __init__(self, _id, _name, _studentList, _markList):
         self.id = _id
         self.name = _name
@@ -29,7 +29,7 @@ class course:
     def getCourseName(self):
         return self.name
 
-    def printMarksList(self, i):
+    def printList(self, i):
         print(self.markList[i])
 
 students = []
@@ -94,7 +94,7 @@ while choices < 4:
     elif choices == 2:
         print("Id".ljust(5, " "), "Name".ljust(15, " "), "Dob")
         for i in range(0, numOfStudents):
-            students[i].printStudentsList
+            students[i].printList
 
     # Show student marks for a given course
     elif choices == 3:
@@ -102,7 +102,7 @@ while choices < 4:
             print(courses[j].getCourseName())
             for i in range(0, numOfStudents):
                 students[i].getNameAndId()
-                courses[j].printMarksList(i)
+                courses[j].printList(i)
 
     else:
         break
