@@ -124,8 +124,6 @@ def showAverageMarks():
 
 choices = 1
 
-print(marks)
-
 # Listing functions
 while choices:
     choices = int(
