@@ -11,9 +11,8 @@ def ls():
 
 def getFileOrFolderName(cmd):
     names = []
-    if len(cmd) == 2:
-        name = cmd[1]
-    elif len(cmd) > 2:
+    name = cmd[1]
+    if len(cmd) > 2:
         for i in range(1, len(cmd)):
             names.append(cmd[i])
         name = f"{' '.join(names)}"
@@ -68,13 +67,13 @@ while True:
     directory = os.getcwd()
     command = input(Fore.RED + directory + ": ")
     cmd = command.split(" ")
-    if cmd[0] == "cat" and len(cmd) == 2:
+    if cmd[0] == "cat" and len(cmd) >= 2:
         cat(cmd)
     elif cmd[0] == "ls":
         ls()
-    elif cmd[0] == "cd" and len(cmd) == 2:
+    elif cmd[0] == "cd" and len(cmd) >= 2:
         cd(cmd)
-    elif cmd[0] == "touch" and len(cmd) == 2:
+    elif cmd[0] == "touch" and len(cmd) >= 2:
         touch(cmd)
-    elif cmd[0] == "rm" and len(cmd) == 2:
+    elif cmd[0] == "rm" and len(cmd) >= 2:
         remove(cmd)
