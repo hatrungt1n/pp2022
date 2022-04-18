@@ -1,22 +1,34 @@
+from fileinput import filename
 import os
 from colorama import Fore
+import readline
 
 def ls():
     # get current directory
     files = os.getcwd()
     getFiles = os.listdir(files)
-    print('\t'.join(map(str, getFiles)))
+    print('\t'.join(getFiles))
+
+
+def getFileOrFolderName(cmd):
+    name = cmd[1]
+    names = []
+    if len(cmd) > 2:
+        for i in range(1, len(cmd)):
+            names.append(cmd[i])
+        name = f"{' '.join(names)}"
+
+    return name
 
 
 def cat(cmd):
-    fileName = cmd[1]
-    with open(fileName, 'r')as f:
+    with open(getFileOrFolderName(cmd), 'r')as f:
         data = f.read()
     print(data)
 
 
 def cd(cmd):
-    path = cmd[1]
+    path = getFileOrFolderName(cmd)
     try:
         os.chdir(path)
         # print("Current working directory: {0}".format(os.getcwd()))
@@ -29,16 +41,27 @@ def cd(cmd):
 
 
 def touch(cmd):
-    newFile = cmd[1]
+    newFile = getFileOrFolderName(cmd)
     if os.path.exists(newFile): 
         print("File has already existed!")
     open(newFile, "w")
 
 def remove(cmd):
-    file = cmd[1]
+    file = getFileOrFolderName(cmd)
     if (not os.path.exists(file)):
         print("The file does not exist")
     os.remove(file)
+
+
+def completer(text, state):
+    options = [i for i in os.listdir(os.getcwd()) if i.startswith(text)]
+    if state < len(options):
+        return options[state]
+    else:
+        return None
+
+readline.parse_and_bind("tab: complete")
+readline.set_completer(completer)
 
 
 while True:
