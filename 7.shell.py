@@ -30,9 +30,15 @@ def cd(cmd):
 
 def touch(cmd):
     newFile = cmd[1]
-    while os.path.isfile(newFile): 
+    if os.path.exists(newFile): 
         print("File has already existed!")
     open(newFile, "w")
+
+def remove(cmd):
+    file = cmd[1]
+    if (not os.path.exists(file)):
+        print("The file does not exist")
+    os.remove(file)
 
 
 while True:
@@ -41,9 +47,11 @@ while True:
     cmd = command.split(" ")
     if (cmd[0] == "cat"):
         cat(cmd)
-    elif cmd[0] == "ls" and len(cmd) == 1:
+    elif cmd[0] == "ls":
         ls()
-    elif len(cmd) == 2 and cmd[0] == "cd":
+    elif cmd[0] == "cd":
         cd(cmd)
     elif cmd[0] == "touch":
         touch(cmd)
+    elif cmd[0] == "rm":
+        remove(cmd)
