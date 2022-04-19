@@ -39,17 +39,35 @@ def cd(cmd):
         print("You do not have permissions to change to {0}".format(path))
 
 
+def mkdir(cmd):
+    newFolder = getFileOrFolderName(cmd)
+    if os.path.exists(newFolder): 
+        print("Folder has already existed!")
+    else:
+        os.mkdir(newFolder)
+
+
+def rmdir(cmd):
+    folder = getFileOrFolderName(cmd)
+    if (not os.path.exists(folder)): 
+        print("The folder does not exist!")
+    else:
+        os.rmdir(folder)
+
+
 def touch(cmd):
     newFile = getFileOrFolderName(cmd)
     if os.path.exists(newFile): 
         print("File has already existed!")
-    open(newFile, "w")
+    else:
+        open(newFile, "w")
 
 def remove(cmd):
     file = getFileOrFolderName(cmd)
     if (not os.path.exists(file)):
-        print("The file does not exist")
-    os.remove(file)
+        print("The file does not exist!")
+    else:
+        os.remove(file)
 
 
 def completer(text, state):
@@ -77,3 +95,7 @@ while True:
         touch(cmd)
     elif cmd[0] == "rm" and len(cmd) >= 2:
         remove(cmd)
+    elif cmd[0] == "mkdir" and len(cmd) >= 2:
+        mkdir(cmd)
+    elif cmd[0] == "rmdir" and len(cmd) >= 2:
+        rmdir(cmd)
